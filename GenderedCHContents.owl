@@ -7,1337 +7,895 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix cidoc-crm: <http://www.cidoc-crm.org/rdfs/cidoc-crm#> .
-@base <http://www.semanticweb.org/ioanna/ontologies/2015/6/gender> .
 
-<http://www.semanticweb.org/ioanna/ontologies/2015/6/gender> rdf:type owl:Ontology ;
-                                                             
-                                                             rdfs:comment "The ‘GenderedCHContents’ ontology is developed as an extension of the Europeana Data Model (EDM) and it aims to semantically describe women’s figures within a specific Cultural Heritage content  and secondly  display the symbolisms that connect a specific figure with a gendered characteristic. Thus the scope of  ‘GenderedCHContents’ ontology is to represent ideas, beliefs and norms about women’s ‘depictions’ in different historical periods. " ;
-                                                             
-                                                             owl:imports edm: .
-
-
-#################################################################
-#
-#    Object Properties
-#
-#################################################################
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#bears
-
-:bears rdf:type owl:ObjectProperty ;
-       
-       rdfs:domain :Entity ;
-       
-       rdfs:range [ rdf:type owl:Class ;
-                    owl:unionOf ( :Accessory
-                                  :Entity
-                                )
-                  ] .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasAppearance
-
-:hasAppearance rdf:type owl:ObjectProperty ;
-               
-               rdfs:range :EmbodiedAppearance ;
-               
-               rdfs:domain :Entity .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasEmotions
-
-:hasEmotions rdf:type owl:ObjectProperty ;
-             
-             rdfs:domain :Entity ;
-             
-             rdfs:range :GenderedEmotions .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasGenderIdentity
-
-:hasGenderIdentity rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:domain :Entity ;
-                   
-                   rdfs:range :GenderIdentity .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasGenderRoleOf
-
-:hasGenderRoleOf rdf:type owl:ObjectProperty ;
-                 
-                 rdfs:domain :Entity ;
-                 
-                 rdfs:range :GenderRoles .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasHairstyle
-
-:hasHairstyle rdf:type owl:ObjectProperty ;
-              
-              rdfs:domain :Entity ;
-              
-              rdfs:range :Hairstyle ;
-              
-              rdfs:subPropertyOf :hasAppearance .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasSkills
-
-:hasSkills rdf:type owl:ObjectProperty ;
-           
-           rdfs:domain :Entity ;
-           
-           rdfs:range :GenderedSkills .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isAssociatedWith
-
-:isAssociatedWith rdf:type owl:ObjectProperty ;
-                  
-                  rdfs:range :Entity ;
-                  
-                  rdfs:domain :SignifiedConcepts ;
-                  
-                  owl:propertyChainAxiom ( :isSymbolisedBy
-                                           :symbolises
-                                         ) .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isCharacterisedAs
-
-:isCharacterisedAs rdf:type owl:ObjectProperty ;
-                   
-                   rdfs:domain :Entity ;
-                   
-                   rdfs:range :GenderedTraits .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isSymbolFor
-
-:isSymbolFor rdf:type owl:ObjectProperty ;
-             
-             rdfs:domain :Content ;
-             
-             rdfs:range :Entity .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isSymbolisedBy
-
-:isSymbolisedBy rdf:type owl:ObjectProperty ;
-                
-                rdfs:range :Content ;
-                
-                rdfs:domain :Entity ;
-                
-                owl:inverseOf :isSymbolFor ;
-                
-                rdfs:subPropertyOf owl:topObjectProperty .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#performsActivity
-
-:performsActivity rdf:type owl:ObjectProperty ;
-                  
-                  rdfs:range :EmbodiedActivity ;
-                  
-                  rdfs:domain :Entity .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#poses
-
-:poses rdf:type owl:ObjectProperty ;
-       
-       rdfs:domain :Entity ;
-       
-       rdfs:range :Posture ;
-       
-       rdfs:subPropertyOf owl:topObjectProperty .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#relatesWith
-
-:relatesWith rdf:type owl:ObjectProperty ,
-                      owl:SymmetricProperty ;
-             
-             rdfs:range :Entity ;
-             
-             rdfs:domain :Entity .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#symbolises
-
-:symbolises rdf:type owl:ObjectProperty ;
-            
-            rdfs:domain :Content ;
-            
-            rdfs:range :SignifiedConcepts .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#wears
-
-:wears rdf:type owl:ObjectProperty ;
-       
-       rdfs:range :Dress ;
-       
-       rdfs:domain :Entity ;
-       
-       rdfs:subPropertyOf :hasAppearance .
-
-
-
-
-
-#################################################################
-#
-#    Data properties
-#
-#################################################################
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#actsWithinGenderedSpace
-
-:actsWithinGenderedSpace rdf:type owl:DatatypeProperty ;
-                         
-                         rdfs:domain :Entity ;
-                         
-                         rdfs:range [ rdf:type rdfs:Datatype ;
-                                      owl:oneOf [ rdf:type rdf:List ;
-                                                  rdf:first "abstract" ;
-                                                  rdf:rest [ rdf:type rdf:List ;
-                                                             rdf:first "indoors" ;
-                                                             rdf:rest [ rdf:type rdf:List ;
-                                                                        rdf:first "non specified" ;
-                                                                        rdf:rest [ rdf:type rdf:List ;
-                                                                                   rdf:first "outdoors" ;
-                                                                                   rdf:rest [ rdf:type rdf:List ;
-                                                                                              rdf:first "private" ;
-                                                                                              rdf:rest [ rdf:type rdf:List ;
-                                                                                                         rdf:first "public" ;
-                                                                                                         rdf:rest [ rdf:type rdf:List ;
-                                                                                                                    rdf:first "specified" ;
-                                                                                                                    rdf:rest rdf:nil
-                                                                                                                  ]
-                                                                                                       ]
-                                                                                            ]
-                                                                                 ]
-                                                                      ]
-                                                           ]
-                                                ]
-                                    ] .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasRelationToGenderNorms
-
-:hasRelationToGenderNorms rdf:type owl:DatatypeProperty ;
-                          
-                          rdfs:domain :Entity ;
-                          
-                          rdfs:range [ rdf:type rdfs:Datatype ;
-                                       owl:oneOf [ rdf:type rdf:List ;
-                                                   rdf:first "complied" ;
-                                                   rdf:rest [ rdf:type rdf:List ;
-                                                              rdf:first "not complied" ;
-                                                              rdf:rest rdf:nil
-                                                            ]
-                                                 ]
-                                     ] .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasSocialClass
-
-:hasSocialClass rdf:type owl:DatatypeProperty ;
-                
-                rdfs:domain :Entity ;
-                
-                rdfs:subPropertyOf owl:topDataProperty ;
-                
-                rdfs:range [ rdf:type rdfs:Datatype ;
-                             owl:oneOf [ rdf:type rdf:List ;
-                                         rdf:first "lower" ;
-                                         rdf:rest [ rdf:type rdf:List ;
-                                                    rdf:first "middle" ;
-                                                    rdf:rest [ rdf:type rdf:List ;
-                                                               rdf:first "not applicable" ;
-                                                               rdf:rest [ rdf:type rdf:List ;
-                                                                          rdf:first "upper" ;
-                                                                          rdf:rest rdf:nil
-                                                                        ]
-                                                             ]
-                                                  ]
-                                       ]
-                           ] .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasSocialStatus
-
-:hasSocialStatus rdf:type owl:DatatypeProperty ;
-                 
-                 rdfs:domain :Entity ;
-                 
-                 rdfs:range [ rdf:type rdfs:Datatype ;
-                              owl:oneOf [ rdf:type rdf:List ;
-                                          rdf:first "has status" ;
-                                          rdf:rest [ rdf:type rdf:List ;
-                                                     rdf:first "no status" ;
-                                                     rdf:rest rdf:nil
-                                                   ]
-                                        ]
-                            ] .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasStateOfHealth
-
-:hasStateOfHealth rdf:type owl:DatatypeProperty ;
-                  
-                  rdfs:domain :Entity ;
-                  
-                  rdfs:subPropertyOf owl:topDataProperty ;
-                  
-                  rdfs:range [ rdf:type rdfs:Datatype ;
-                               owl:oneOf [ rdf:type rdf:List ;
-                                           rdf:first "healthy" ;
-                                           rdf:rest [ rdf:type rdf:List ;
-                                                      rdf:first "mentioned illness" ;
-                                                      rdf:rest [ rdf:type rdf:List ;
-                                                                 rdf:first "not mentioned" ;
-                                                                 rdf:rest [ rdf:type rdf:List ;
-                                                                            rdf:first "unhealthy" ;
-                                                                            rdf:rest rdf:nil
-                                                                          ]
-                                                               ]
-                                                    ]
-                                         ]
-                             ] .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#performsWithinTime
-
-:performsWithinTime rdf:type owl:DatatypeProperty ;
-                    
-                    rdfs:domain :Entity ;
-                    
-                    rdfs:range [ rdf:type rdfs:Datatype ;
-                                 owl:oneOf [ rdf:type rdf:List ;
-                                             rdf:first "abstract" ;
-                                             rdf:rest [ rdf:type rdf:List ;
-                                                        rdf:first "ancient period" ;
-                                                        rdf:rest [ rdf:type rdf:List ;
-                                                                   rdf:first "day" ;
-                                                                   rdf:rest [ rdf:type rdf:List ;
-                                                                              rdf:first "early modern period" ;
-                                                                              rdf:rest [ rdf:type rdf:List ;
-                                                                                         rdf:first "medieval period" ;
-                                                                                         rdf:rest [ rdf:type rdf:List ;
-                                                                                                    rdf:first "modern period" ;
-                                                                                                    rdf:rest [ rdf:type rdf:List ;
-                                                                                                               rdf:first "narrative future" ;
-                                                                                                               rdf:rest [ rdf:type rdf:List ;
-                                                                                                                          rdf:first "narrative past" ;
-                                                                                                                          rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                     rdf:first "narrative present" ;
-                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                rdf:first "night" ;
-                                                                                                                                                rdf:rest rdf:nil
-                                                                                                                                              ]
-                                                                                                                                   ]
-                                                                                                                        ]
-                                                                                                             ]
-                                                                                                  ]
-                                                                                       ]
-                                                                            ]
-                                                                 ]
-                                                      ]
-                                           ]
-                               ] .
-
-
-
-
-
-#################################################################
-#
-#    Classes
-#
-#################################################################
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Accessory
-
-:Accessory rdf:type owl:Class ;
-           
-           rdfs:subClassOf :EmbodiedAppearance ;
-           
-           rdfs:comment "Refers to all things that complement one person’s appearance.   " .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Animal
-
-:Animal rdf:type owl:Class ;
-        
-        rdfs:subClassOf :Entity ;
-        
-        rdfs:comment """Refers to all living organisms that are not human. 
+<http://www.semanticweb.org/ioanna/ontologies/2015/6/gender> a owl:Ontology ;
+	owl:imports <http://www.europeana.eu/schemas/edm/> ;
+	rdfs:comment "The ‘GenderedCHContents’ ontology is developed as an extension of the Europeana Data Model (EDM) and it aims to semantically describe women’s figures within a specific Cultural Heritage content  and secondly  display the symbolisms that connect a specific figure with a gendered characteristic. Thus the scope of  ‘GenderedCHContents’ ontology is to represent ideas, beliefs and norms about women’s ‘depictions’ in different historical periods. " .
+# 
+# 
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#bears
+
+:bears a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range _:genid1 .
+
+_:genid1 a owl:Class ;
+	owl:unionOf _:genid3 .
+
+_:genid3 a rdf:List ;
+	rdf:first :Accessory ;
+	rdf:rest _:genid2 .
+
+_:genid2 a rdf:List ;
+	rdf:first :Entity ;
+	rdf:rest rdf:nil .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasAppearance
+
+:hasAppearance a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :EmbodiedAppearance .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasEmotions
+
+:hasEmotions a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :GenderedEmotions .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasGenderIdentity
+
+:hasGenderIdentity a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :GenderIdentity .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasGenderRoleOf
+
+:hasGenderRoleOf a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :GenderRoles .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasHairstyle
+
+:hasHairstyle a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasAppearance ;
+	rdfs:domain :Entity ;
+	rdfs:range :Hairstyle .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasSkills
+
+:hasSkills a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :GenderedSkills .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isAssociatedWith
+
+:isAssociatedWith a owl:ObjectProperty ;
+	rdfs:domain :SignifiedConcepts ;
+	rdfs:range :Entity ;
+	owl:propertyChainAxiom _:genid5 .
+
+_:genid5 a rdf:List ;
+	rdf:first :isSymbolisedBy ;
+	rdf:rest _:genid4 .
+
+_:genid4 a rdf:List ;
+	rdf:first :symbolises ;
+	rdf:rest rdf:nil .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isCharacterisedAs
+
+:isCharacterisedAs a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :GenderedTraits .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isSymbolFor
+
+:isSymbolFor a owl:ObjectProperty ;
+	owl:inverseOf :isSymbolisedBy ;
+	rdfs:domain :Content ;
+	rdfs:range :Entity .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#isSymbolisedBy
+
+:isSymbolisedBy a owl:ObjectProperty ;
+	rdfs:subPropertyOf owl:topObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :Content .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#performsActivity
+
+:performsActivity a owl:ObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :EmbodiedActivity .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#poses
+
+:poses a owl:ObjectProperty ;
+	rdfs:subPropertyOf owl:topObjectProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :Posture .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#relatesWith
+
+:relatesWith a owl:ObjectProperty , owl:SymmetricProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range :Entity .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#symbolises
+
+:symbolises a owl:ObjectProperty ;
+	rdfs:domain :Content ;
+	rdfs:range :SignifiedConcepts .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#wears
+
+:wears a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasAppearance ;
+	rdfs:domain :Entity ;
+	rdfs:range :Dress .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#actsWithinGenderedSpace
+
+:actsWithinGenderedSpace a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :actsWithinSpace .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#actsWithinSpace
+
+:actsWithinSpace a owl:DatatypeProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range _:genid6 .
+
+_:genid6 a rdfs:Datatype ;
+	owl:oneOf _:genid13 .
+
+_:genid13 a rdf:List ;
+	rdf:first "abstract" ;
+	rdf:rest _:genid12 .
+
+_:genid12 a rdf:List ;
+	rdf:first "indoors" ;
+	rdf:rest _:genid11 .
+
+_:genid11 a rdf:List ;
+	rdf:first "non specified" ;
+	rdf:rest _:genid10 .
+
+_:genid10 a rdf:List ;
+	rdf:first "outdoors" ;
+	rdf:rest _:genid9 .
+
+_:genid9 a rdf:List ;
+	rdf:first "private" ;
+	rdf:rest _:genid8 .
+
+_:genid8 a rdf:List ;
+	rdf:first "public" ;
+	rdf:rest _:genid7 .
+
+_:genid7 a rdf:List ;
+	rdf:first "specified" ;
+	rdf:rest rdf:nil .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasRelationToGenderNorms
+
+:hasRelationToGenderNorms a owl:DatatypeProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range _:genid14 .
+
+_:genid14 a rdfs:Datatype ;
+	owl:oneOf _:genid16 .
+
+_:genid16 a rdf:List ;
+	rdf:first "complied" ;
+	rdf:rest _:genid15 .
+
+_:genid15 a rdf:List ;
+	rdf:first "not complied" ;
+	rdf:rest rdf:nil .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasSocialClass
+
+:hasSocialClass a owl:DatatypeProperty ;
+	rdfs:subPropertyOf owl:topDataProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range _:genid17 .
+
+_:genid17 a rdfs:Datatype ;
+	owl:oneOf _:genid21 .
+
+_:genid21 a rdf:List ;
+	rdf:first "lower" ;
+	rdf:rest _:genid20 .
+
+_:genid20 a rdf:List ;
+	rdf:first "middle" ;
+	rdf:rest _:genid19 .
+
+_:genid19 a rdf:List ;
+	rdf:first "not applicable" ;
+	rdf:rest _:genid18 .
+
+_:genid18 a rdf:List ;
+	rdf:first "upper" ;
+	rdf:rest rdf:nil .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasSocialStatus
+
+:hasSocialStatus a owl:DatatypeProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range _:genid22 .
+
+_:genid22 a rdfs:Datatype ;
+	owl:oneOf _:genid24 .
+
+_:genid24 a rdf:List ;
+	rdf:first "has status" ;
+	rdf:rest _:genid23 .
+
+_:genid23 a rdf:List ;
+	rdf:first "no status" ;
+	rdf:rest rdf:nil .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#hasStateOfHealth
+
+:hasStateOfHealth a owl:DatatypeProperty ;
+	rdfs:subPropertyOf owl:topDataProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range _:genid25 .
+
+_:genid25 a rdfs:Datatype ;
+	owl:oneOf _:genid29 .
+
+_:genid29 a rdf:List ;
+	rdf:first "healthy" ;
+	rdf:rest _:genid28 .
+
+_:genid28 a rdf:List ;
+	rdf:first "mentioned illness" ;
+	rdf:rest _:genid27 .
+
+_:genid27 a rdf:List ;
+	rdf:first "not mentioned" ;
+	rdf:rest _:genid26 .
+
+_:genid26 a rdf:List ;
+	rdf:first "unhealthy" ;
+	rdf:rest rdf:nil .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#performsWithinTime
+
+:performsWithinTime a owl:DatatypeProperty ;
+	rdfs:domain :Entity ;
+	rdfs:range _:genid30 .
+
+_:genid30 a rdfs:Datatype ;
+	owl:oneOf _:genid40 .
+
+_:genid40 a rdf:List ;
+	rdf:first "abstract" ;
+	rdf:rest _:genid39 .
+
+_:genid39 a rdf:List ;
+	rdf:first "ancient period" ;
+	rdf:rest _:genid38 .
+
+_:genid38 a rdf:List ;
+	rdf:first "day" ;
+	rdf:rest _:genid37 .
+
+_:genid37 a rdf:List ;
+	rdf:first "early modern period" ;
+	rdf:rest _:genid36 .
+
+_:genid36 a rdf:List ;
+	rdf:first "medieval period" ;
+	rdf:rest _:genid35 .
+
+_:genid35 a rdf:List ;
+	rdf:first "modern period" ;
+	rdf:rest _:genid34 .
+
+_:genid34 a rdf:List ;
+	rdf:first "narrative future" ;
+	rdf:rest _:genid33 .
+
+_:genid33 a rdf:List ;
+	rdf:first "narrative past" ;
+	rdf:rest _:genid32 .
+
+_:genid32 a rdf:List ;
+	rdf:first "narrative present" ;
+	rdf:rest _:genid31 .
+
+_:genid31 a rdf:List ;
+	rdf:first "night" ;
+	rdf:rest rdf:nil .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Accessory
+
+:Accessory a owl:Class ;
+	rdfs:subClassOf :EmbodiedAppearance ;
+	rdfs:comment "Refers to all things that complement one person’s appearance.   " .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Animal
+
+:Animal a owl:Class ;
+	rdfs:subClassOf :Entity ;
+	rdfs:comment """Refers to all living organisms that are not human. 
 """ .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Body
-
-:Body rdf:type owl:Class ;
-      
-      rdfs:subClassOf :RepresentationalContent ;
-      
-      rdfs:comment "Refers to the physical structure of a living entity and here, the body is seen as a medium for shaping social interaction." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Content
-
-:Content rdf:type owl:Class ;
-         
-         rdfs:subClassOf cidoc-crm:E89_Propositional_Object ;
-         
-         rdfs:comment "Describes what the work is about." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Deity
-
-:Deity rdf:type owl:Class ;
-       
-       rdfs:subClassOf :Entity ;
-       
-       rdfs:comment "Refers to supernatural beings that convey ideas about the sacred." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Demigod
-
-:Demigod rdf:type owl:Class ;
-         
-         owl:equivalentClass [ rdf:type owl:Class ;
-                               owl:intersectionOf ( :Deity
-                                                    :UnrealPerson
-                                                  )
-                             ] ;
-         
-         rdfs:subClassOf :Entity ;
-         
-         rdfs:comment "An entity that has partially divine and partially human characteristics." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Dress
-
-:Dress rdf:type owl:Class ;
-       
-       rdfs:subClassOf :EmbodiedAppearance ;
-       
-       rdfs:comment "Refers to the clothing that entities wear." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EmbodiedActivity
-
-:EmbodiedActivity rdf:type owl:Class ;
-                  
-                  rdfs:subClassOf :RepresentationalContent ;
-                  
-                  rdfs:comment "Refers to the performance/act of an entity." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EmbodiedAppearance
-
-:EmbodiedAppearance rdf:type owl:Class ;
-                    
-                    rdfs:subClassOf :RepresentationalContent ;
-                    
-                    rdfs:comment "Refers to the way a body looks." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Entity
-
-:Entity rdf:type owl:Class ;
-        
-        rdfs:subClassOf :RepresentationalContent ;
-        
-        rdfs:comment "Contains all entities that have distinct and independent existence, being and form. " .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderIdentity
-
-:GenderIdentity rdf:type owl:Class ;
-                
-                rdfs:subClassOf :RepresentationalContent ;
-                
-                rdfs:comment "Presents ‘a person’s ascribed gender identity’." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderRoles
-
-:GenderRoles rdf:type owl:Class ;
-             
-             rdfs:subClassOf :RepresentationalContent ;
-             
-             rdfs:comment "Refers to the distinct social roles assigned to men and women." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderedEmotions
-
-:GenderedEmotions rdf:type owl:Class ;
-                  
-                  rdfs:subClassOf :RepresentationalContent ;
-                  
-                  rdfs:comment "Presents the feelings that derive from an entity." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderedSkills
-
-:GenderedSkills rdf:type owl:Class ;
-                
-                rdfs:subClassOf :RepresentationalContent ;
-                
-                rdfs:comment "Refers to particular abilities that genders may have." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderedTraits
-
-:GenderedTraits rdf:type owl:Class ;
-                
-                rdfs:subClassOf :RepresentationalContent ;
-                
-                rdfs:comment "Refers to the characteristics that are ascribed to a specific entity." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Hairstyle
-
-:Hairstyle rdf:type owl:Class ;
-           
-           rdfs:subClassOf :EmbodiedAppearance ;
-           
-           rdfs:comment "Refers to the way in which an entity’s hair is cut and arranged. " .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Non-representationalContent
-
-:Non-representationalContent rdf:type owl:Class ;
-                             
-                             rdfs:subClassOf :Content ;
-                             
-                             rdfs:comment "Refers to abstract and non figurative art/literary description which does not aim to reference reality." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Object
-
-:Object rdf:type owl:Class ;
-        
-        rdfs:subClassOf :Entity ;
-        
-        rdfs:comment "Refers to all material things." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Person
-
-:Person rdf:type owl:Class ;
-        
-        owl:equivalentClass <http://xmlns.com/foaf/0.1/Person> ;
-        
-        rdfs:subClassOf :Entity .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Posture
-
-:Posture rdf:type owl:Class ;
-         
-         rdfs:subClassOf :Body ;
-         
-         rdfs:comment "Refers to the position of the body and to attitudes related to it." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#RealPerson
-
-:RealPerson rdf:type owl:Class ;
-            
-            rdfs:subClassOf :Person ;
-            
-            rdfs:comment "Refers to people that lived in real life, thus having historical evidence of their existence. " .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#RepresentationalContent
-
-:RepresentationalContent rdf:type owl:Class ;
-                         
-                         rdfs:subClassOf :Content ;
-                         
-                         rdfs:comment "Refers to easily recognisable depictions of figures, objects etc." .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SignifiedConcepts
-
-:SignifiedConcepts rdf:type owl:Class ;
-                   
-                   rdfs:subClassOf :Content ;
-                   
-                   rdfs:comment "Denotes the meaning that entities may carry. In this case, meaning related to gender symbolisms. " .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#UnrealPerson
-
-:UnrealPerson rdf:type owl:Class ;
-              
-              rdfs:subClassOf :Person ;
-              
-              rdfs:comment "Refers to all characters and figures that are fictional or mythological and thus imaginary. " .
-
-
-
-###  http://xmlns.com/foaf/0.1/Person
-
-
-
-
-
-
-#################################################################
-#
-#    Individuals
-#
-#################################################################
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#17thCenturyGown
-
-<http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#17thCenturyGown> rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Apoptygma
-
-:Apoptygma rdf:type :Dress ,
-                    owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#BeautifulEvil
-
-:BeautifulEvil rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Beauty
-
-:Beauty rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Belt
-
-:Belt rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Box
-
-:Box rdf:type :Object ,
-              owl:NamedIndividual ;
-     
-     :symbolises :Evils .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#CausedSorrowAndMischiefToMen
-
-:CausedSorrowAndMischiefToMen rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ClenchedHands
-
-:ClenchedHands rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#CreatorOfTheRaceOfWomenAndFemaleKind
-
-:CreatorOfTheRaceOfWomenAndFemaleKind rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Crown
-
-:Crown rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Deceitful
-
-:Deceitful rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#DeepLook
-
-:DeepLook rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#DoricChiton
-
-:DoricChiton rdf:type :Dress ,
-                      owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Dress
-
-:Dress rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Drone
-
-:Drone rdf:type :Entity ,
-                owl:NamedIndividual ;
-       
-       :symbolises :Laziness .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EmbroideredVeil
-
-:EmbroideredVeil rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EnvelopedBySmokeOfEvils
-
-:EnvelopedBySmokeOfEvils rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Epimetheus
-
-:Epimetheus rdf:type :UnrealPerson ,
-                     owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EscapeIntoTheAir
-
-:EscapeIntoTheAir rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Evils
-
-:Evils rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#FeetCloseTogether
-
-:FeetCloseTogether rdf:type :Posture ,
-                            owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#FemmeFatale
-
-:FemmeFatale rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#FirstWoman
-
-:FirstWoman rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Garlands
-
-:Garlands rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Gift
-
-:Gift rdf:type owl:NamedIndividual ;
-      
-      :symbolises :PlagueToMen .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Goods
-
-:Goods rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Graceful
-
-:Graceful rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HairLoopedUp
-
-:HairLoopedUp rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HandsAtSides
-
-:HandsAtSides rdf:type :Posture ,
-                       owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HesiodsTheogonyPandora
-
-:HesiodsTheogonyPandora rdf:type :UnrealPerson ,
-                                 owl:NamedIndividual ;
-                        
-                        :performsWithinTime "ancient period" ;
-                        
-                        dc:type "text" ;
-                        
-                        :actsWithinGenderedSpace "specified" ;
-                        
-                        :isCharacterisedAs :BeautifulEvil ;
-                        
-                        :hasGenderRoleOf :CreatorOfTheRaceOfWomenAndFemaleKind ;
-                        
-                        :wears :Crown ;
-                        
-                        :isSymbolisedBy :Drone ;
-                        
-                        :wears :EmbroideredVeil ;
-                        
-                        :isCharacterisedAs :FirstWoman ;
-                        
-                        :wears :Garlands ;
-                        
-                        edm:isSimilarTo :NiobidsPandora ,
-                                        :RossettisPandora ,
-                                        :SerwoutersPandora ;
-                        
-                        :wears :SilveryRaiment ;
-                        
-                        :hasGenderRoleOf :Wife ;
-                        
-                        :hasGenderIdentity :Woman .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HesiodsWorksAndDaysPandora
-
-:HesiodsWorksAndDaysPandora rdf:type :UnrealPerson ,
-                                     owl:NamedIndividual ;
-                            
-                            dc:type "text" ;
-                            
-                            :performsWithinTime "ancient period" ;
-                            
-                            :actsWithinGenderedSpace "specified" ;
-                            
-                            :wears :Belt ;
-                            
-                            :performsActivity :CausedSorrowAndMischiefToMen ;
-                            
-                            :isCharacterisedAs :Deceitful ;
-                            
-                            :relatesWith :Epimetheus ;
-                            
-                            :isSymbolisedBy :Gift ;
-                            
-                            :isCharacterisedAs :Graceful ;
-                            
-                            :poses :Longing ;
-                            
-                            :hasGenderRoleOf :ModestMaid ;
-                            
-                            :bears :Necklace ;
-                            
-                            :hasSkills :Needlework ;
-                            
-                            :poses :ShamelessMind ;
-                            
-                            :hasSkills :Speech ;
-                            
-                            :poses :Strength ,
-                                   :Voice ;
-                            
-                            :hasSkills :Weaving ;
-                            
-                            :hasGenderRoleOf :Wife ;
-                            
-                            :hasGenderIdentity :Woman ;
-                            
-                            :bears :Wreath ;
-                            
-                            :performsActivity :tookOfftheGreatLidOfTheJar .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HoldingWreaths
-
-:HoldingWreaths rdf:type :EmbodiedActivity ,
-                         owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Laziness
-
-:Laziness rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#LongHairWithADottedFillet
-
-:LongHairWithADottedFillet rdf:type :Hairstyle ,
-                                    owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Longing
-
-:Longing rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#LostGaze
-
-:LostGaze rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Melancholy
-
-:Melancholy rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#MessyUpdoLongHair
-
-:MessyUpdoLongHair rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ModestMaid
-
-:ModestMaid rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Mournful
-
-:Mournful rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Necklace
-
-:Necklace rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Needlework
-
-:Needlework rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#NiobidsPandora
-
-:NiobidsPandora rdf:type :UnrealPerson ,
-                         owl:NamedIndividual ;
-                
-                :performsWithinTime "abstract" ;
-                
-                :actsWithinGenderedSpace "non specified" ;
-                
-                :hasRelationToGenderNorms "complied" ;
-                
-                :hasStateOfHealth "healthy" ;
-                
-                :actsWithinGenderedSpace "abstract" ;
-                
-                :hasSocialClass "not applicable" ;
-                
-                :hasSocialStatus "has status" ;
-                
-                :wears :Apoptygma ,
-                       :DoricChiton ;
-                
-                :poses :FeetCloseTogether ,
-                       :HandsAtSides ;
-                
-                :performsActivity :HoldingWreaths ;
-                
-                :hasHairstyle :LongHairWithADottedFillet ;
-                
-                :bears :Pin ;
-                
-                edm:isSimilarTo :RossettisPandora ,
-                                :SerwoutersPandora ;
-                
-                :performsActivity :StandsEnFaceInTheCentre ;
-                
-                dc:subject :TheCreationOfPandora ;
-                
-                cidoc-crm:P67_refers_to :TheMythOfPandora ;
-                
-                cidoc-crm:P138_represents :TheMythOfPandora ;
-                
-                cidoc-crm:P129_is_about :TheMythOfPandora ;
-                
-                :hasGenderRoleOf :Wife ;
-                
-                :hasGenderIdentity :Woman ;
-                
-                :hasEmotions :emotionless .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#PandoraAndHerBox
-
-:PandoraAndHerBox rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#PandoraBroughtToEpimetheusByMercury
-
-:PandoraBroughtToEpimetheusByMercury rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Pin
-
-:Pin rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#PlagueToMen
-
-:PlagueToMen rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#RossettisPandora
-
-:RossettisPandora rdf:type :UnrealPerson ,
-                           owl:NamedIndividual ;
-                  
-                  :hasSocialStatus "has status" ;
-                  
-                  :performsWithinTime "abstract" ;
-                  
-                  :actsWithinGenderedSpace "non specified" ;
-                  
-                  :hasSocialClass "upper" ;
-                  
-                  :hasStateOfHealth "healthy" ;
-                  
-                  :relatesWith :Box ;
-                  
-                  :bears :Box ;
-                  
-                  :isSymbolisedBy :Box ;
-                  
-                  :poses :ClenchedHands ,
-                         :DeepLook ;
-                  
-                  :wears :Dress ;
-                  
-                  :poses :EnvelopedBySmokeOfEvils ;
-                  
-                  :isCharacterisedAs :FemmeFatale ;
-                  
-                  edm:isSimilarTo :HesiodsTheogonyPandora ,
-                                  :HesiodsWorksAndDaysPandora ;
-                  
-                  :poses :LostGaze ;
-                  
-                  :hasEmotions :Melancholy ,
-                               :Mournful ;
-                  
-                  edm:isSimilarTo :NiobidsPandora ;
-                  
-                  cidoc-crm:P138_represents :PandoraAndHerBox ;
-                  
-                  cidoc-crm:P129_is_about :PandoraAndHerBox ;
-                  
-                  cidoc-crm:P67_refers_to :PandoraAndHerBox ;
-                  
-                  dc:subject :PandoraAndHerBox ;
-                  
-                  :isCharacterisedAs :Sentimental ;
-                  
-                  edm:isSimilarTo :SerwoutersPandora ;
-                  
-                  :poses :Voluptuous ;
-                  
-                  :hasGenderIdentity :Woman ;
-                  
-                  :hasHairstyle :superabundanceOfLongHair .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Scarf
-
-:Scarf rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Sentimental
-
-:Sentimental rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SerwoutersPandora
-
-:SerwoutersPandora rdf:type :UnrealPerson ,
-                            owl:NamedIndividual ;
-                   
-                   :hasStateOfHealth "healthy" ;
-                   
-                   :actsWithinGenderedSpace "outdoors" ;
-                   
-                   :hasSocialClass "upper" ;
-                   
-                   :hasSocialStatus "has status" ;
-                   
-                   :hasRelationToGenderNorms "complied" ;
-                   
-                   :performsWithinTime "day" ;
-                   
-                   :wears <http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#17thCenturyGown> ;
-                   
-                   :bears :Box ;
-                   
-                   :relatesWith :Box ;
-                   
-                   :wears :Crown ;
-                   
-                   :relatesWith :Epimetheus ;
-                   
-                   :hasHairstyle :MessyUpdoLongHair ;
-                   
-                   edm:isSimilarTo :NiobidsPandora ;
-                   
-                   cidoc-crm:P138_represents :PandoraBroughtToEpimetheusByMercury ;
-                   
-                   dc:subject :PandoraBroughtToEpimetheusByMercury ;
-                   
-                   cidoc-crm:P129_is_about :PandoraBroughtToEpimetheusByMercury ;
-                   
-                   edm:isSimilarTo :RossettisPandora ;
-                   
-                   :wears :Scarf ;
-                   
-                   :performsActivity :ShowsBoxToEpimetheus ;
-                   
-                   :hasGenderRoleOf :Wife ;
-                   
-                   :hasGenderIdentity :Woman .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ShamelessMind
-
-:ShamelessMind rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ShowsBoxToEpimetheus
-
-:ShowsBoxToEpimetheus rdf:type :EmbodiedActivity ,
-                               owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SilveryRaiment
-
-:SilveryRaiment rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Speech
-
-:Speech rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SpreadsAllOverTheEarth
-
-:SpreadsAllOverTheEarth rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#StandsEnFaceInTheCentre
-
-:StandsEnFaceInTheCentre rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Strength
-
-:Strength rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#TheMythOfPandora
-
-:TheMythOfPandora rdf:type cidoc-crm:E89_Propositional_Object ,
-                           owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Vice
-
-:Vice rdf:type owl:NamedIndividual ;
-      
-      :relatesWith :Box ;
-      
-      :symbolises :Evils ;
-      
-      :isSymbolFor :Evils ;
-      
-      :relatesWith :SerwoutersPandora ;
-      
-      :performsActivity :SpreadsAllOverTheEarth .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Virtues
-
-:Virtues rdf:type :Entity ,
-                  owl:NamedIndividual ;
-         
-         :relatesWith :Box ;
-         
-         :performsActivity :EscapeIntoTheAir ;
-         
-         :symbolises :Goods ;
-         
-         :isSymbolFor :Goods ;
-         
-         :relatesWith :SerwoutersPandora ;
-         
-         :hasGenderIdentity :Woman .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Voice
-
-:Voice rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Voluptuous
-
-:Voluptuous rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Weaving
-
-:Weaving rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#WeddingRitual
-
-:WeddingRitual rdf:type :SignifiedConcepts ,
-                        owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Wife
-
-:Wife rdf:type :GenderRoles ,
-               owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Woman
-
-:Woman rdf:type owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Wreath
-
-:Wreath rdf:type :Accessory ,
-                 owl:NamedIndividual ;
-        
-        :symbolises :WeddingRitual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#emotionless
-
-:emotionless rdf:type :GenderedEmotions ,
-                      owl:NamedIndividual .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#superabundanceOfLongHair
-
-:superabundanceOfLongHair rdf:type owl:NamedIndividual ;
-                          
-                          :symbolises :Beauty ;
-                          
-                          :relatesWith :RossettisPandora .
-
-
-
-###  http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#tookOfftheGreatLidOfTheJar
-
-:tookOfftheGreatLidOfTheJar rdf:type owl:NamedIndividual .
-
-
-
-
-###  Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net
-
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Body
+
+:Body a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Refers to the physical structure of a living entity and here, the body is seen as a medium for shaping social interaction." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Content
+
+:Content a owl:Class ;
+	rdfs:subClassOf cidoc-crm:E89_Propositional_Object ;
+	rdfs:comment "Describes what the work is about." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Deity
+
+:Deity a owl:Class ;
+	rdfs:subClassOf :Entity ;
+	rdfs:comment "Refers to supernatural beings that convey ideas about the sacred." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Demigod
+
+:Demigod a owl:Class ;
+	owl:equivalentClass _:genid41 .
+
+_:genid41 owl:intersectionOf _:genid43 .
+
+_:genid43 a rdf:List ;
+	rdf:first :Deity ;
+	rdf:rest _:genid42 .
+
+_:genid42 a rdf:List ;
+	rdf:first :UnrealPerson ;
+	rdf:rest rdf:nil .
+
+_:genid41 a owl:Class .
+
+:Demigod rdfs:subClassOf :Entity ;
+	rdfs:comment "An entity that has partially divine and partially human characteristics." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Dress
+
+:Dress a owl:Class ;
+	rdfs:subClassOf :EmbodiedAppearance .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EmbodiedActivity
+
+:EmbodiedActivity a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Refers to the performance/act of an entity." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EmbodiedAppearance
+
+:EmbodiedAppearance a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Refers to the way a body looks." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Entity
+
+:Entity a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Contains all entities that have distinct and independent existence, being and form. " .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderIdentity
+
+:GenderIdentity a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Presents ‘a person’s ascribed gender identity’." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderRoles
+
+:GenderRoles a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Refers to the distinct social roles assigned to men and women." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderedEmotions
+
+:GenderedEmotions a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Presents the feelings that derive from an entity." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderedSkills
+
+:GenderedSkills a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Refers to particular abilities that genders may have." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#GenderedTraits
+
+:GenderedTraits a owl:Class ;
+	rdfs:subClassOf :RepresentationalContent ;
+	rdfs:comment "Refers to the characteristics that are ascribed to a specific entity." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Hairstyle
+
+:Hairstyle a owl:Class ;
+	rdfs:subClassOf :EmbodiedAppearance ;
+	rdfs:comment "Refers to the way in which an entity’s hair is cut and arranged. " .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Non-representationalContent
+
+:Non-representationalContent a owl:Class ;
+	rdfs:subClassOf :Content ;
+	rdfs:comment "Refers to abstract and non figurative art/literary description which does not aim to reference reality." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Object
+
+:Object a owl:Class ;
+	rdfs:subClassOf :Entity ;
+	rdfs:comment "Refers to all material things." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Person
+
+:Person a owl:Class ;
+	owl:equivalentClass <http://xmlns.com/foaf/0.1/Person> ;
+	rdfs:subClassOf :Entity .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Posture
+
+:Posture a owl:Class ;
+	rdfs:subClassOf :Body ;
+	rdfs:comment "Refers to the position of the body and to attitudes related to it." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#RealPerson
+
+:RealPerson a owl:Class ;
+	rdfs:subClassOf :Person ;
+	rdfs:comment "Refers to people that lived in real life, thus having historical evidence of their existence. " .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#RepresentationalContent
+
+:RepresentationalContent a owl:Class ;
+	rdfs:subClassOf :Content ;
+	rdfs:comment "Refers to easily recognisable depictions of figures, objects etc." .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SignifiedConcepts
+
+:SignifiedConcepts a owl:Class ;
+	rdfs:subClassOf :Content ;
+	rdfs:comment "Denotes the meaning that entities may carry. In this case, meaning related to gender symbolisms. " .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#UnrealPerson
+
+:UnrealPerson a owl:Class ;
+	rdfs:subClassOf :Person ;
+	rdfs:comment "Refers to all characters and figures that are fictional or mythological and thus imaginary. " .
+# 
+# http://xmlns.com/foaf/0.1/Person
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Individuals
+# #
+# #################################################################
+# 
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Apoptygma
+
+:Apoptygma a owl:NamedIndividual , :Dress .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#BeautifulEvil
+
+:BeautifulEvil a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Beauty
+
+:Beauty a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Belt
+
+:Belt a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Box
+
+:Box a owl:NamedIndividual , :Object ;
+	:symbolises :Evils .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#CausedSorrowAndMischiefToMen
+
+:CausedSorrowAndMischiefToMen a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ClenchedHands
+
+:ClenchedHands a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#CreatorOfTheRaceOfWomenAndFemaleKind
+
+:CreatorOfTheRaceOfWomenAndFemaleKind a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Crown
+
+:Crown a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Deceitful
+
+:Deceitful a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#DeepLook
+
+:DeepLook a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#DoricChiton
+
+:DoricChiton a owl:NamedIndividual , :Dress .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Dress
+
+:Dress a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Drone
+
+:Drone a owl:NamedIndividual , :Entity ;
+	:symbolises :Laziness .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EmbroideredVeil
+
+:EmbroideredVeil a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EnvelopedBySmokeOfEvils
+
+:EnvelopedBySmokeOfEvils a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Epimetheus
+
+:Epimetheus a owl:NamedIndividual , :UnrealPerson .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#EscapeIntoTheAir
+
+:EscapeIntoTheAir a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Evils
+
+:Evils a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#FeetCloseTogether
+
+:FeetCloseTogether a owl:NamedIndividual , :Posture .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#FemmeFatale
+
+:FemmeFatale a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#FirstWoman
+
+:FirstWoman a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Garlands
+
+:Garlands a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Gift
+
+:Gift a owl:NamedIndividual ;
+	:symbolises :PlagueToMen .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Goods
+
+:Goods a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Graceful
+
+:Graceful a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HairLoopedUp
+
+:HairLoopedUp a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HandsAtSides
+
+:HandsAtSides a owl:NamedIndividual , :Posture .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HesiodsTheogonyPandora
+
+:HesiodsTheogonyPandora a owl:NamedIndividual , :UnrealPerson ;
+	edm:isSimilarTo :NiobidsPandora , :RossettisPandora , :SerwoutersPandora ;
+	:hasGenderIdentity :Woman ;
+	:hasGenderRoleOf :CreatorOfTheRaceOfWomenAndFemaleKind , :Wife ;
+	:isCharacterisedAs :BeautifulEvil , :FirstWoman ;
+	:isSymbolisedBy :Drone ;
+	:wears :Crown , :EmbroideredVeil , :Garlands , :SilveryRaiment ;
+	dc:type "text" ;
+	:actsWithinSpace "specified" ;
+	:performsWithinTime "ancient period" .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HesiodsWorksAndDaysPandora
+
+:HesiodsWorksAndDaysPandora a owl:NamedIndividual , :UnrealPerson ;
+	:bears :Necklace , :Wreath ;
+	:hasGenderIdentity :Woman ;
+	:hasGenderRoleOf :ModestMaid , :Wife ;
+	:hasSkills :Needlework , :Speech , :Weaving ;
+	:isCharacterisedAs :Deceitful , :Graceful ;
+	:isSymbolisedBy :Gift ;
+	:performsActivity :CausedSorrowAndMischiefToMen , :tookOfftheGreatLidOfTheJar ;
+	:poses :Longing , :ShamelessMind , :Strength , :Voice ;
+	:relatesWith :Epimetheus ;
+	:wears :Belt ;
+	dc:type "text" ;
+	:actsWithinSpace "specified" ;
+	:performsWithinTime "ancient period" .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#HoldingWreaths
+
+:HoldingWreaths a owl:NamedIndividual , :EmbodiedActivity .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Laziness
+
+:Laziness a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#LongHairWithADottedFillet
+
+:LongHairWithADottedFillet a owl:NamedIndividual , :Hairstyle .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Longing
+
+:Longing a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#LostGaze
+
+:LostGaze a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Melancholy
+
+:Melancholy a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#MessyUpdoLongHair
+
+:MessyUpdoLongHair a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ModestMaid
+
+:ModestMaid a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Mournful
+
+:Mournful a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Necklace
+
+:Necklace a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Needlework
+
+:Needlework a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#NiobidsPandora
+
+:NiobidsPandora a owl:NamedIndividual , :UnrealPerson ;
+	dc:subject :TheCreationOfPandora .
+
+:TheCreationOfPandora a owl:NamedIndividual .
+
+:NiobidsPandora cidoc-crm:P129_is_about :TheMythOfPandora ;
+	cidoc-crm:P138_represents :TheMythOfPandora ;
+	cidoc-crm:P67_refers_to :TheMythOfPandora ;
+	edm:isSimilarTo :RossettisPandora , :SerwoutersPandora ;
+	:bears :Pin ;
+	:hasEmotions :emotionless ;
+	:hasGenderIdentity :Woman ;
+	:hasGenderRoleOf :Wife ;
+	:hasHairstyle :LongHairWithADottedFillet ;
+	:performsActivity :HoldingWreaths , :StandsEnFaceInTheCentre ;
+	:poses :FeetCloseTogether , :HandsAtSides ;
+	:wears :Apoptygma , :DoricChiton ;
+	:actsWithinSpace "abstract" , "non specified" ;
+	:hasRelationToGenderNorms "complied" ;
+	:hasSocialClass "not applicable" ;
+	:hasSocialStatus "has status" ;
+	:hasStateOfHealth "healthy" ;
+	:performsWithinTime "abstract" .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#PandoraAndHerBox
+
+:PandoraAndHerBox a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#PandoraBroughtToEpimetheusByMercury
+
+:PandoraBroughtToEpimetheusByMercury a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Pin
+
+:Pin a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#PlagueToMen
+
+:PlagueToMen a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#RossettisPandora
+
+:RossettisPandora a owl:NamedIndividual , :UnrealPerson ;
+	dc:subject :PandoraAndHerBox ;
+	cidoc-crm:P129_is_about :PandoraAndHerBox ;
+	cidoc-crm:P138_represents :PandoraAndHerBox ;
+	cidoc-crm:P67_refers_to :PandoraAndHerBox ;
+	edm:isSimilarTo :HesiodsTheogonyPandora , :HesiodsWorksAndDaysPandora , :NiobidsPandora , :SerwoutersPandora ;
+	:bears :Box ;
+	:hasEmotions :Melancholy , :Mournful ;
+	:hasGenderIdentity :Woman ;
+	:hasHairstyle :superabundanceOfLongHair ;
+	:isCharacterisedAs :FemmeFatale , :Sentimental ;
+	:isSymbolisedBy :Box ;
+	:poses :ClenchedHands , :DeepLook , :EnvelopedBySmokeOfEvils , :LostGaze , :Voluptuous ;
+	:relatesWith :Box ;
+	:wears :Dress ;
+	:actsWithinSpace "non specified" ;
+	:hasSocialClass "upper" ;
+	:hasSocialStatus "has status" ;
+	:hasStateOfHealth "healthy" ;
+	:performsWithinTime "abstract" .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Scarf
+
+:Scarf a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Sentimental
+
+:Sentimental a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SerwoutersPandora
+
+:SerwoutersPandora a owl:NamedIndividual , :UnrealPerson ;
+	dc:subject :PandoraBroughtToEpimetheusByMercury ;
+	cidoc-crm:P129_is_about :PandoraBroughtToEpimetheusByMercury ;
+	cidoc-crm:P138_represents :PandoraBroughtToEpimetheusByMercury ;
+	edm:isSimilarTo :NiobidsPandora , :RossettisPandora ;
+	:bears :Box ;
+	:hasGenderIdentity :Woman ;
+	:hasGenderRoleOf :Wife ;
+	:hasHairstyle :MessyUpdoLongHair ;
+	:performsActivity :ShowsBoxToEpimetheus ;
+	:relatesWith :Box , :Epimetheus ;
+	:wears :Crown , :Scarf , :17thCenturyGown ;
+	:actsWithinSpace "outdoors" ;
+	:hasRelationToGenderNorms "complied" ;
+	:hasSocialClass "upper" ;
+	:hasSocialStatus "has status" ;
+	:hasStateOfHealth "healthy" ;
+	:performsWithinTime "day" .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ShamelessMind
+
+:ShamelessMind a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#ShowsBoxToEpimetheus
+
+:ShowsBoxToEpimetheus a owl:NamedIndividual , :EmbodiedActivity .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SilveryRaiment
+
+:SilveryRaiment a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Speech
+
+:Speech a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#SpreadsAllOverTheEarth
+
+:SpreadsAllOverTheEarth a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#StandsEnFaceInTheCentre
+
+:StandsEnFaceInTheCentre a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Strength
+
+:Strength a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#TheCreationOfPandora
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#TheMythOfPandora
+
+:TheMythOfPandora a owl:NamedIndividual , cidoc-crm:E89_Propositional_Object .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Vice
+
+:Vice a owl:NamedIndividual ;
+	:isSymbolFor :Evils ;
+	:performsActivity :SpreadsAllOverTheEarth ;
+	:relatesWith :Box , :SerwoutersPandora ;
+	:symbolises :Evils .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Virtues
+
+:Virtues a owl:NamedIndividual , :Entity ;
+	:hasGenderIdentity :Woman ;
+	:isSymbolFor :Goods ;
+	:performsActivity :EscapeIntoTheAir ;
+	:relatesWith :Box , :SerwoutersPandora ;
+	:symbolises :Goods .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Voice
+
+:Voice a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Voluptuous
+
+:Voluptuous a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Weaving
+
+:Weaving a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#WeddingRitual
+
+:WeddingRitual a owl:NamedIndividual , :SignifiedConcepts .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Wife
+
+:Wife a owl:NamedIndividual , :GenderRoles .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Woman
+
+:Woman a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#Wreath
+
+:Wreath a owl:NamedIndividual , :Accessory ;
+	:symbolises :WeddingRitual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#emotionless
+
+:emotionless a owl:NamedIndividual , :GenderedEmotions .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#superabundanceOfLongHair
+
+:superabundanceOfLongHair a owl:NamedIndividual ;
+	:relatesWith :RossettisPandora ;
+	:symbolises :Beauty .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#tookOfftheGreatLidOfTheJar
+
+:tookOfftheGreatLidOfTheJar a owl:NamedIndividual .
+# 
+# http://www.semanticweb.org/ioanna/ontologies/2015/6/gender#17thCenturyGown
+
+:17thCenturyGown a owl:NamedIndividual .
+# 
+# 
+# 
+# #################################################################
+# #
+# #    Annotations
+# #
+# #################################################################
+# 
+# 
+
+:Dress rdfs:comment "Refers to the clothing that entities wear." .
+# 
+# Generated by the OWL API (version 4.2.5.20160517-0735) https://github.com/owlcs/owlapi
